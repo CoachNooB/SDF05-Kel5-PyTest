@@ -1,0 +1,101 @@
+============================= test session starts ==============================
+platform linux -- Python 3.14.7, pytest-9.1.1, pluggy-1.6.0 -- /mnt/0d4e66c1-5591-4bca-9353-e1ab2154dd86/University/Semester 3/IKR2142 - Software Development Fundamentals/Tugas/Tugas Pytest/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /tmp/pricing_03_missing_quantity_validation_bkv4w6zr
+configfile: pytest.ini
+testpaths: tests
+collecting ... collected 32 items
+
+tests/test_pricing.py::test_subtotal_multiplies_price_by_quantity[multiple-items] PASSED [  3%]
+tests/test_pricing.py::test_subtotal_multiplies_price_by_quantity[single-item] PASSED [  6%]
+tests/test_pricing.py::test_subtotal_multiplies_price_by_quantity[decimal-price] PASSED [  9%]
+tests/test_pricing.py::test_subtotal_multiplies_price_by_quantity[floating-point] PASSED [ 12%]
+tests/test_pricing.py::test_subtotal_accepts_zero_price PASSED           [ 15%]
+tests/test_pricing.py::test_subtotal_rejects_negative_price[-1] PASSED   [ 18%]
+tests/test_pricing.py::test_subtotal_rejects_negative_price[-0.01] PASSED [ 21%]
+tests/test_pricing.py::test_subtotal_rejects_zero_quantity FAILED        [ 25%]
+tests/test_pricing.py::test_subtotal_rejects_negative_quantity[-1] FAILED [ 28%]
+tests/test_pricing.py::test_subtotal_rejects_negative_quantity[-5] FAILED [ 31%]
+tests/test_pricing.py::test_member_receives_ten_percent_discount PASSED  [ 34%]
+tests/test_pricing.py::test_non_member_pays_full_subtotal PASSED         [ 37%]
+tests/test_pricing.py::test_member_discount_handles_decimal_subtotal PASSED [ 40%]
+tests/test_pricing.py::test_discount_preserves_zero_subtotal[True] PASSED [ 43%]
+tests/test_pricing.py::test_discount_preserves_zero_subtotal[False] PASSED [ 46%]
+tests/test_pricing.py::test_tax_adds_eleven_percent PASSED               [ 50%]
+tests/test_pricing.py::test_tax_handles_decimal_amount PASSED            [ 53%]
+tests/test_pricing.py::test_tax_preserves_zero_amount PASSED             [ 56%]
+tests/test_pricing.py::test_total_for_member_includes_discount_and_tax PASSED [ 59%]
+tests/test_pricing.py::test_total_for_non_member_includes_tax_without_discount PASSED [ 62%]
+tests/test_pricing.py::test_total_defaults_to_non_member PASSED          [ 65%]
+tests/test_pricing.py::test_total_handles_decimal_price PASSED           [ 68%]
+tests/test_pricing.py::test_total_accepts_zero_price[True] PASSED        [ 71%]
+tests/test_pricing.py::test_total_accepts_zero_price[False] PASSED       [ 75%]
+tests/test_pricing.py::test_total_propagates_negative_price_error PASSED [ 78%]
+tests/test_pricing.py::test_total_propagates_invalid_quantity_error[0] FAILED [ 81%]
+tests/test_pricing.py::test_total_propagates_invalid_quantity_error[-1] FAILED [ 84%]
+tests/test_pricing.py::test_receipt_ends_every_line_with_newline PASSED  [ 87%]
+tests/test_pricing.py::test_receipt_with_single_line_has_final_newline PASSED [ 90%]
+tests/test_pricing.py::test_receipt_preserves_utf8_text PASSED           [ 93%]
+tests/test_pricing.py::test_receipt_overwrites_existing_file PASSED      [ 96%]
+tests/test_pricing.py::test_receipt_with_empty_lines_writes_one_newline PASSED [100%]
+
+=================================== FAILURES ===================================
+_____________________ test_subtotal_rejects_zero_quantity ______________________
+
+    def test_subtotal_rejects_zero_quantity():
+>       with pytest.raises(ValueError, match="^quantity must be positive$"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_pricing.py:32: Failed
+_________________ test_subtotal_rejects_negative_quantity[-1] __________________
+
+quantity = -1
+
+    @pytest.mark.parametrize("quantity", [-1, -5])
+    def test_subtotal_rejects_negative_quantity(quantity):
+>       with pytest.raises(ValueError, match="^quantity must be positive$"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_pricing.py:38: Failed
+_________________ test_subtotal_rejects_negative_quantity[-5] __________________
+
+quantity = -5
+
+    @pytest.mark.parametrize("quantity", [-1, -5])
+    def test_subtotal_rejects_negative_quantity(quantity):
+>       with pytest.raises(ValueError, match="^quantity must be positive$"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_pricing.py:38: Failed
+_______________ test_total_propagates_invalid_quantity_error[0] ________________
+
+quantity = 0
+
+    @pytest.mark.parametrize("quantity", [0, -1])
+    def test_total_propagates_invalid_quantity_error(quantity):
+>       with pytest.raises(ValueError, match="^quantity must be positive$"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_pricing.py:100: Failed
+_______________ test_total_propagates_invalid_quantity_error[-1] _______________
+
+quantity = -1
+
+    @pytest.mark.parametrize("quantity", [0, -1])
+    def test_total_propagates_invalid_quantity_error(quantity):
+>       with pytest.raises(ValueError, match="^quantity must be positive$"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_pricing.py:100: Failed
+=========================== short test summary info ============================
+FAILED tests/test_pricing.py::test_subtotal_rejects_zero_quantity - Failed: D...
+FAILED tests/test_pricing.py::test_subtotal_rejects_negative_quantity[-1] - F...
+FAILED tests/test_pricing.py::test_subtotal_rejects_negative_quantity[-5] - F...
+FAILED tests/test_pricing.py::test_total_propagates_invalid_quantity_error[0]
+FAILED tests/test_pricing.py::test_total_propagates_invalid_quantity_error[-1]
+========================= 5 failed, 27 passed in 0.08s =========================
